@@ -148,3 +148,7 @@ conn.commit()
 conn.close()
 
 print("Base SQLite créée avec succès :", DB_PATH)
+
+print(df_rne.columns.tolist())
+print(df_sirene.columns.tolist())
+

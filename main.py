@@ -6,7 +6,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-    # df: pd.DataFrame = pd.read_csv("data/extrait_bdd_rne(in).csv")
-    df: pd.DataFrame = pd.read_csv("data/extrait_bdd_sirene.csv", low_memory=False)
-    print(df.describe())
+    print(df_rne.columns.tolist())
+    print(df_sirene.columns.tolist())
+
 
