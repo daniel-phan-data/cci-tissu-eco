@@ -1,28 +1,25 @@
+"""
+script to turns the 2 initial csv in a db file with 3 tables
+core: just a simple fusion
+lifecycle: beginning and end of activities
+localisation: geographical data
+"""
+
 import sqlite3
 import pandas as pd
 
-# =========================
-# PARAMÈTRES
-# =========================
-
-CSV_RNE = "data/sample_rne.csv"
-CSV_SIRENE = "data/sample_sirene.csv"
-DB_PATH = "data/entreprises.db"
-
-# =========================
-# CONNEXION SQLITE
-# =========================
+#sample csv for testing
+CSV_RNE: str = "data/sample_rne.csv"
+CSV_SIRENE: str = "data/sample_sirene.csv"
+DB_PATH: str = "data/entreprises.db"
 
 conn = sqlite3.connect(DB_PATH)
 
-# =========================
-# LECTURE DES CSV
-# =========================
+# df_rne: pd.DataFrame = pd.read_csv(CSV_RNE)
+# df_sirene: pd.DataFrame = pd.read_csv(CSV_SIRENE)
 
-df_rne = pd.read_csv(CSV_RNE)
-df_sirene = pd.read_csv(CSV_SIRENE)
-
-def clean_columns(df):
+def clean_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """clean column names of a pandas dataframe"""
     df.columns = (
         df.columns
         .str.strip()
@@ -33,13 +30,14 @@ def clean_columns(df):
     )
     return df
 
-df_rne = clean_columns(df_rne)
-df_sirene = clean_columns(df_sirene)
+df_rne = clean_columns(
+    pd.read_csv(CSV_RNE)
+)
+df_sirene = clean_columns(
+    pd.read_csv(CSV_SIRENE)
+)
 
-# =========================
-# TABLE 1 : entreprises_core
-# =========================
-# Base SIRENE + enrichissement RNE
+# TABLE 1 : entreprises_core (simple merge of the 2 csv)
 
 df_core = df_sirene.merge(
     df_rne[["siren", "type_entreprise"]],
@@ -75,9 +73,7 @@ df_core.to_sql(
     },
 )
 
-# =========================
 # TABLE 2 : entreprises_lifecycle
-# =========================
 
 df_lifecycle = df_rne[
     [
@@ -103,9 +99,7 @@ df_lifecycle.to_sql(
     },
 )
 
-# =========================
 # TABLE 3 : entreprises_localisation
-# =========================
 
 df_localisation = df_rne[
     ["siren", "commune", "code_postal", "nro_voie", "voie"]
@@ -122,9 +116,7 @@ df_localisation.to_sql(
     },
 )
 
-# =========================
-# INDEX (PERFORMANCE)
-# =========================
+# indexing for performance
 
 cursor = conn.cursor()
 
@@ -147,8 +139,4 @@ cursor.execute(
 conn.commit()
 conn.close()
 
-print("Base SQLite créée avec succès :", DB_PATH)
-
-print(df_rne.columns.tolist())
-print(df_sirene.columns.tolist())
-
+print("SQLite db successfully created", DB_PATH)
