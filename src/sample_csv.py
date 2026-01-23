@@ -6,6 +6,7 @@ seed = 42
 files = [
     ("data/extrait_bdd_sirene.csv", "data/sample_sirene.csv"),
     ("data/extrait_bdd_rne.csv", "data/sample_rne.csv"),
+    ("data/stock_unite_legale.csv", "data/sample_unite_legale.csv"),
 ]
 
 for input_csv, output_csv in files:
