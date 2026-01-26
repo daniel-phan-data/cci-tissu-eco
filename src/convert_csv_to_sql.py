@@ -1,5 +1,5 @@
 """
-script to turns the 2 initial csv in a db file with 3 tables
+script to turn the 2 initial csv (given by cci) in a db file with 3 tables
 core: just a simple fusion
 lifecycle: beginning and end of activities
 localisation: geographical data
@@ -8,9 +8,8 @@ localisation: geographical data
 import sqlite3
 import pandas as pd
 
-#sample csv for testing
-CSV_RNE: str = "data/sample_rne.csv"
-CSV_SIRENE: str = "data/sample_sirene.csv"
+CSV_RNE: str = "data/extrait_bdd_rne.csv"
+CSV_SIRENE: str = "data/extrait_bdd_sirene.csv"
 DB_PATH: str = "data/entreprises.db"
 
 conn = sqlite3.connect(DB_PATH)

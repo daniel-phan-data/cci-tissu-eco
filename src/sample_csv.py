@@ -1,8 +1,13 @@
+"""
+script to sample large csv files to allow quick tests
+"""
+
 import pandas as pd
 
 n = 1000
 seed = 42
 
+# ("original data", "sample destination")
 files = [
     ("data/extrait_bdd_sirene.csv", "data/sample_sirene.csv"),
     ("data/extrait_bdd_rne.csv", "data/sample_rne.csv"),

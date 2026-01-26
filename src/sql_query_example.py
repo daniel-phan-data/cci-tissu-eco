@@ -1,3 +1,7 @@
+"""
+example setup to use SQL queries on the sqlite database
+"""
+
 import sqlite3
 import pandas as pd
 
